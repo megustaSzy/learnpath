@@ -1,6 +1,6 @@
 <div align="center">
-  <img src="public/logo.png" alt="DevPath Logo" width="120" height="120" />
-  <h1>🚀 DevPath</h1>
+  <img src="public/logo-learn.png" alt="LearnPath Logo" width="120" height="120" />
+  <h1>🚀 LearnPath</h1>
   <p><strong>Empower Your Developer Journey with Structured Roadmaps & Goals</strong></p>
 
   <!-- Badges -->
@@ -15,11 +15,11 @@
 
 <br />
 
-## 📖 What is DevPath?
+## 📖 What is LearnPath?
 
-**DevPath** is a premium, open-source learning platform designed specifically for developers. It eliminates the "tutorial hell" by providing structured, curated learning **Roadmaps**, allowing users to track their progress, set weekly goals, and earn achievements as they master new technologies.
+**LearnPath** is a premium, open-source learning platform designed specifically for developers. It eliminates the "tutorial hell" by providing structured, curated learning **Roadmaps**, allowing users to track their progress, set weekly goals, and earn achievements as they master new technologies.
 
-Whether you're starting from zero or a senior engineer looking to learn generative AI, DevPath guides you every step of the way.
+Whether you're starting from zero or a senior engineer looking to learn generative AI, LearnPath guides you every step of the way.
 
 ---
 
@@ -44,7 +44,7 @@ Whether you're starting from zero or a senior engineer looking to learn generati
 
 ## 🛠️ Tech Stack
 
-DevPath is built using cutting-edge, industry-standard technologies:
+LearnPath is built using cutting-edge, industry-standard technologies:
 
 - **Framework:** [Next.js 16 (App Router)](https://nextjs.org/)
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/) & Glassmorphism UI
@@ -66,8 +66,8 @@ Follow these steps to set up the project locally on your machine.
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/devpath.git
-cd devpath
+git clone https://github.com/yourusername/learnpath.git
+cd learnpath
 ```
 
 ### 2. Install dependencies
@@ -78,7 +78,7 @@ npm install
 ### 3. Configure Environment Variables
 Create a `.env` file in the root directory and copy the contents from `.env.example` (if available), or set the following variables:
 ```env
-DATABASE_URL="postgresql://user:password@localhost:5432/devpath"
+DATABASE_URL="postgresql://user:password@localhost:5432/learnpath"
 NEXTAUTH_SECRET="your_super_secret_key"
 NEXTAUTH_URL="http://localhost:3000"
 ```
@@ -94,9 +94,9 @@ npx prisma migrate dev
 npm run seed
 ```
 > **Note:** The seeder automatically creates three accounts for testing:
-> - `superadmin@devpath.com` (password123)
-> - `admin@devpath.com` (password123)
-> - `user@devpath.com` (password123)
+> - `superadmin@learnpath.com` (password123)
+> - `admin@learnpath.com` (password123)
+> - `user@learnpath.com` (password123)
 
 ### 5. Run the Development Server
 ```bash
@@ -109,7 +109,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the r
 ## 📂 Project Structure
 
 ```text
-devpath/
+learnpath/
 ├── prisma/               # Database schema and seeder
 ├── public/               # Static assets (logo, images)
 ├── src/
@@ -124,7 +124,7 @@ devpath/
 ---
 
 ## 🎨 UI/UX Highlights
-DevPath prioritizes a **Premium Glassmorphism Aesthetic**. Features include:
+LearnPath prioritizes a **Premium Glassmorphism Aesthetic**. Features include:
 - Blur backdrops and translucent cards (`bg-black/50`, `backdrop-blur-md`).
 - Split-screen responsive authentication layouts.
 - Interactive hover effects and modern micro-animations.
@@ -147,5 +147,5 @@ Contributions are what make the open-source community such an amazing place to l
 Distributed under the MIT License. See `LICENSE` for more information.
 
 <div align="center">
-  <p>Built with ❤️ by the DevPath Team.</p>
+  <p>Built with ❤️ by the LearnPath Team.</p>
 </div>

@@ -58,8 +58,8 @@ export default function LoginPage() {
         
         <div className="relative z-10 mb-12">
           <Link href="/" className="inline-flex items-center gap-2 transition-transform hover:scale-105">
-            <Image src="/logo.png" alt="DevPath Logo" width={40} height={40} className="object-contain" />
-            <span className="text-2xl font-bold tracking-tight">DevPath</span>
+            <Image src="/logo-learn.png" alt="LearnPath Logo" width={40} height={40} className="object-contain" />
+            <span className="text-2xl font-bold tracking-tight">LearnPath</span>
           </Link>
         </div>
 
@@ -80,7 +80,7 @@ export default function LoginPage() {
           
           <div className="text-center mb-8">
             <div className="lg:hidden mx-auto flex h-12 w-12 items-center justify-center mb-4">
-              <Image src="/logo.png" alt="DevPath Logo" width={48} height={48} className="object-contain" />
+              <Image src="/logo-learn.png" alt="LearnPath Logo" width={48} height={48} className="object-contain" />
             </div>
             <h2 className="text-3xl font-bold tracking-tight mb-2">Sign In</h2>
             <p className="text-sm text-muted-foreground">Enter your email and password to access your account</p>

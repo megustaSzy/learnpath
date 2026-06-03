@@ -73,9 +73,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="flex h-16 items-center justify-between px-5 border-b border-white/5">
           <Link href="/dashboard" className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg bg-transparent">
-              <Image src="/logo.png" alt="DevPath Logo" width={32} height={32} className="object-contain" />
+              <Image src="/logo-learn.png" alt="LearnPath Logo" width={32} height={32} className="object-contain" />
             </div>
-            <span className="text-lg font-bold tracking-tight">DevPath</span>
+            <span className="text-lg font-bold tracking-tight">LearnPath</span>
           </Link>
           <Button variant="ghost" size="icon" className="lg:hidden text-sidebar-foreground" onClick={() => setSidebarOpen(false)}>
             <X className="h-5 w-5" />

@@ -15,11 +15,11 @@ async function main() {
   const password = await bcrypt.hash("password123", 10);
 
   const superAdmin = await db.user.upsert({
-    where: { email: "superadmin@devpath.com" },
+    where: { email: "superadmin@learnpath.com" },
     update: {},
     create: {
       name: "Super Admin",
-      email: "superadmin@devpath.com",
+      email: "superadmin@learnpath.com",
       password,
       role: "SUPER_ADMIN",
       bio: "Platform super administrator",
@@ -27,11 +27,11 @@ async function main() {
   });
 
   const admin = await db.user.upsert({
-    where: { email: "admin@devpath.com" },
+    where: { email: "admin@learnpath.com" },
     update: {},
     create: {
       name: "Admin User",
-      email: "admin@devpath.com",
+      email: "admin@learnpath.com",
       password,
       role: "ADMIN",
       bio: "Content manager and roadmap curator",
@@ -39,11 +39,11 @@ async function main() {
   });
 
   const user = await db.user.upsert({
-    where: { email: "user@devpath.com" },
+    where: { email: "user@learnpath.com" },
     update: {},
     create: {
       name: "John Doe",
-      email: "user@devpath.com",
+      email: "user@learnpath.com",
       password,
       role: "USER",
       bio: "Passionate developer learning new technologies",
@@ -249,9 +249,9 @@ async function main() {
 
   console.log("\n🎉 Seed completed!");
   console.log("\n📋 Login credentials:");
-  console.log("  Super Admin: superadmin@devpath.com / password123");
-  console.log("  Admin:       admin@devpath.com / password123");
-  console.log("  User:        user@devpath.com / password123");
+  console.log("  Super Admin: superadmin@learnpath.com / password123");
+  console.log("  Admin:       admin@learnpath.com / password123");
+  console.log("  User:        user@learnpath.com / password123");
 }
 
 main()
