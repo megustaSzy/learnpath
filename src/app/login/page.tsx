@@ -35,16 +35,23 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFormValues) => {
     setError(null);
-    const result = await signIn("credentials", {
-      redirect: false,
-      email: data.email,
-      password: data.password,
-    });
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: data.email,
+        password: data.password,
+      });
 
-    if (result?.error) {
-      setError("Invalid email or password");
-    } else if (result?.ok) {
-      window.location.href = "/dashboard";
+      if (result?.error) {
+        setError("Invalid email or password. Please try again.");
+      } else if (result?.ok) {
+        window.location.href = "/dashboard";
+      } else {
+        alert("Login failed, but no specific error returned. Result: " + JSON.stringify(result));
+      }
+    } catch (e: any) {
+      alert("Terjadi error fatal saat request: " + e.message);
+      setError(e.message);
     }
   };
 
