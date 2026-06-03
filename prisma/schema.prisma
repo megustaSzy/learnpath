@@ -1,0 +1,212 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+
+}
+
+
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  USER
+}
+
+enum Difficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum TopicStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum GoalStatus {
+  PENDING
+  COMPLETED
+}
+
+enum ResourceType {
+  DOCUMENTATION
+  YOUTUBE
+  ARTICLE
+  COURSE
+}
+
+model User {
+  id              String             @id @default(uuid())
+  name            String
+  email           String             @unique
+  password        String
+  avatar          String?
+  bio             String?            @db.Text
+  githubUrl       String?            @map("github_url")
+  linkedinUrl     String?            @map("linkedin_url")
+  role            Role               @default(USER)
+  isActive        Boolean            @default(true) @map("is_active")
+  createdAt       DateTime           @default(now()) @map("created_at")
+  updatedAt       DateTime           @updatedAt @map("updated_at")
+
+  roadmapsCreated Roadmap[]          @relation("RoadmapCreator")
+  userRoadmaps    UserRoadmap[]
+  topicProgress   UserTopicProgress[]
+  weeklyGoals     WeeklyGoal[]
+  achievements    UserAchievement[]
+  notifications   Notification[]
+  activityLogs    ActivityLog[]
+  
+  @@map("users")
+}
+
+model RoadmapCategory {
+  id          String    @id @default(uuid())
+  name        String
+  slug        String    @unique
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  roadmaps    Roadmap[]
+  
+  @@map("roadmap_categories")
+}
+
+model Roadmap {
+  id             String           @id @default(uuid())
+  categoryId     String           @map("category_id")
+  title          String
+  slug           String           @unique
+  description    String?          @db.Text
+  difficulty     Difficulty       @default(BEGINNER)
+  estimatedHours Int?             @map("estimated_hours")
+  thumbnail      String?
+  createdBy      String           @map("created_by")
+  createdAt      DateTime         @default(now()) @map("created_at")
+  updatedAt      DateTime         @updatedAt @map("updated_at")
+
+  category       RoadmapCategory  @relation(fields: [categoryId], references: [id])
+  creator        User             @relation("RoadmapCreator", fields: [createdBy], references: [id])
+  topics         RoadmapTopic[]
+  userRoadmaps   UserRoadmap[]
+  
+  @@map("roadmaps")
+}
+
+model RoadmapTopic {
+  id             String           @id @default(uuid())
+  roadmapId      String           @map("roadmap_id")
+  title          String
+  description    String?          @db.Text
+  orderNumber    Int              @map("order_number")
+  estimatedHours Int?             @map("estimated_hours")
+  createdAt      DateTime         @default(now()) @map("created_at")
+
+  roadmap        Roadmap          @relation(fields: [roadmapId], references: [id], onDelete: Cascade)
+  resources      TopicResource[]
+  userProgress   UserTopicProgress[]
+  
+  @@map("roadmap_topics")
+}
+
+model TopicResource {
+  id             String       @id @default(uuid())
+  topicId        String       @map("topic_id")
+  title          String
+  url            String
+  resourceType   ResourceType @map("resource_type")
+
+  topic          RoadmapTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  
+  @@map("topic_resources")
+}
+
+model UserRoadmap {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  roadmapId   String   @map("roadmap_id")
+  joinedAt    DateTime @default(now()) @map("joined_at")
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  roadmap     Roadmap  @relation(fields: [roadmapId], references: [id], onDelete: Cascade)
+  
+  @@map("user_roadmaps")
+}
+
+model UserTopicProgress {
+  id          String       @id @default(uuid())
+  userId      String       @map("user_id")
+  topicId     String       @map("topic_id")
+  status      TopicStatus  @default(NOT_STARTED)
+  completedAt DateTime?    @map("completed_at")
+
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic       RoadmapTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  
+  @@map("user_topic_progress")
+}
+
+model WeeklyGoal {
+  id          String     @id @default(uuid())
+  userId      String     @map("user_id")
+  title       String
+  deadline    DateTime
+  status      GoalStatus @default(PENDING)
+  createdAt   DateTime   @default(now()) @map("created_at")
+
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("weekly_goals")
+}
+
+model Achievement {
+  id                     String             @id @default(uuid())
+  name                   String
+  description            String?            @db.Text
+  badgeIcon              String?            @map("badge_icon")
+  requirementPercentage  Int                @map("requirement_percentage")
+
+  userAchievements       UserAchievement[]
+  
+  @@map("achievements")
+}
+
+model UserAchievement {
+  id             String       @id @default(uuid())
+  userId         String       @map("user_id")
+  achievementId  String       @map("achievement_id")
+  earnedAt       DateTime     @default(now()) @map("earned_at")
+
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievement    Achievement  @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+  
+  @@map("user_achievements")
+}
+
+model Notification {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  title       String
+  message     String   @db.Text
+  isRead      Boolean  @default(false) @map("is_read")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("notifications")
+}
+
+model ActivityLog {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  activity    String   @db.Text
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("activity_logs")
+}
