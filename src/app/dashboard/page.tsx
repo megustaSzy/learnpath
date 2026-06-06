@@ -29,14 +29,14 @@ async function UserDashboard() {
   ];
 
   return (
-    <div className="space-y-6">
-      <div>
+    <main className="space-y-6">
+      <header>
         <h1 className="text-2xl font-bold">Dashboard</h1>
         <p className="text-muted-foreground">Welcome back! Here's your learning overview.</p>
-      </div>
+      </header>
 
       {/* Stats Grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <section aria-label="User Statistics" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {statCards.map((stat) => (
           <Card key={stat.label} className="relative overflow-hidden">
             <CardContent className="p-6">
@@ -50,7 +50,7 @@ async function UserDashboard() {
             </CardContent>
           </Card>
         ))}
-      </div>
+      </section>
 
       {/* Roadmap Progress */}
       <Card>
@@ -68,9 +68,10 @@ async function UserDashboard() {
               </Link>
             </div>
           ) : (
-            <div className="space-y-4">
+            <ul className="space-y-4 list-none p-0 m-0">
               {stats.roadmapProgress.map((rp) => (
-                <Link key={rp.id} href={`/dashboard/progress/${rp.slug}`} className="block">
+                <li key={rp.id}>
+                  <Link href={`/dashboard/progress/${rp.slug}`} className="block">
                   <div className="flex items-center gap-4 rounded-lg border p-4 hover:bg-accent/50 transition-colors">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
@@ -90,8 +91,9 @@ async function UserDashboard() {
                     </div>
                   </div>
                 </Link>
+                </li>
               ))}
-            </div>
+            </ul>
           )}
         </CardContent>
       </Card>
@@ -105,9 +107,9 @@ async function UserDashboard() {
           {stats.recentActivity.length === 0 ? (
             <p className="text-muted-foreground text-sm text-center py-4">No recent activity</p>
           ) : (
-            <div className="space-y-3">
+            <ul className="space-y-3 list-none p-0 m-0">
               {stats.recentActivity.map((log) => (
-                <div key={log.id} className="flex items-start gap-3 text-sm">
+                <li key={log.id} className="flex items-start gap-3 text-sm">
                   <div className="mt-1 h-2 w-2 rounded-full bg-primary shrink-0" />
                   <div className="flex-1">
                     <p>{log.activity}</p>
@@ -117,13 +119,13 @@ async function UserDashboard() {
                       })}
                     </p>
                   </div>
-                </div>
+                  </li>
               ))}
-            </div>
+            </ul>
           )}
         </CardContent>
       </Card>
-    </div>
+    </main>
   );
 }
 
@@ -136,12 +138,12 @@ async function AdminDashboard() {
   ];
 
   return (
-    <div className="space-y-6">
-      <div>
+    <main className="space-y-6">
+      <header>
         <h1 className="text-2xl font-bold">Admin Dashboard</h1>
         <p className="text-muted-foreground">Manage roadmaps and content.</p>
-      </div>
-      <div className="grid gap-4 sm:grid-cols-3">
+      </header>
+      <section aria-label="Admin Statistics" className="grid gap-4 sm:grid-cols-3">
         {statCards.map((stat) => (
           <Card key={stat.label}>
             <CardContent className="p-6">
@@ -155,26 +157,26 @@ async function AdminDashboard() {
             </CardContent>
           </Card>
         ))}
-      </div>
+      </section>
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">Popular Roadmaps</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3">
+          <ul className="space-y-3 list-none p-0 m-0">
             {stats.popularRoadmaps.map((r: any) => (
-              <div key={r.id} className="flex items-center justify-between rounded-lg border p-4">
+              <li key={r.id} className="flex items-center justify-between rounded-lg border p-4">
                 <div>
                   <p className="font-medium">{r.title}</p>
                   <p className="text-xs text-muted-foreground">{r.category.name}</p>
                 </div>
                 <Badge variant="secondary">{r._count.userRoadmaps} users</Badge>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </CardContent>
       </Card>
-    </div>
+    </main>
   );
 }
 
@@ -188,12 +190,12 @@ async function SuperAdminDashboard() {
   ];
 
   return (
-    <div className="space-y-6">
-      <div>
+    <main className="space-y-6">
+      <header>
         <h1 className="text-2xl font-bold">Super Admin Dashboard</h1>
         <p className="text-muted-foreground">System overview and management.</p>
-      </div>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      </header>
+      <section aria-label="Super Admin Statistics" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {statCards.map((stat) => (
           <Card key={stat.label}>
             <CardContent className="p-6">
@@ -207,7 +209,7 @@ async function SuperAdminDashboard() {
             </CardContent>
           </Card>
         ))}
-      </div>
+      </section>
       <Card>
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
@@ -219,7 +221,7 @@ async function SuperAdminDashboard() {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </main>
   );
 }
 

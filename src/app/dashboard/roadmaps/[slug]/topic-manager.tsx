@@ -84,11 +84,12 @@ export function TopicManager({ roadmapId, topics }: TopicManagerProps) {
           </DialogContent>
         </Dialog>
       </CardHeader>
-      <CardContent className="space-y-2">
-        {topics.map((topic) => (
-          <div key={topic.id} className="flex items-center justify-between rounded-lg border p-3 text-sm">
-            <div className="flex items-center gap-3">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary text-xs font-bold">{topic.orderNumber}</span>
+      <CardContent>
+        <ul className="space-y-2 list-none p-0 m-0">
+          {topics.map((topic) => (
+            <li key={topic.id} className="flex items-center justify-between rounded-lg border p-3 text-sm">
+              <div className="flex items-center gap-3">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary text-xs font-bold" aria-label={`Order ${topic.orderNumber}`}>{topic.orderNumber}</span>
               <div>
                 <p className="font-medium">{topic.title}</p>
                 <p className="text-xs text-muted-foreground">{topic.resources.length} resources</p>
@@ -132,8 +133,9 @@ export function TopicManager({ roadmapId, topics }: TopicManagerProps) {
                 </DialogContent>
               </Dialog>
             </div>
-          </div>
+          </li>
         ))}
+        </ul>
       </CardContent>
     </Card>
   );
