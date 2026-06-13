@@ -30,7 +30,7 @@ export default async function PublicProfilePage({ params }: { params: { id: stri
       <nav className="sticky top-0 w-full z-50 border-b bg-background/80 backdrop-blur-md">
         <div className="mx-auto max-w-6xl px-6 flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold tracking-tight">LearnPath</span>
+            <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">LearnPath</span>
           </Link>
           <div className="flex items-center gap-3">
             <Link href="/dashboard" className="text-sm font-medium hover:underline text-muted-foreground hover:text-foreground">
@@ -40,24 +40,27 @@ export default async function PublicProfilePage({ params }: { params: { id: stri
         </div>
       </nav>
 
-      <main className="max-w-6xl mx-auto px-6 py-12">
+      {/* Cover Gradient */}
+      <div className="h-48 w-full bg-gradient-to-r from-primary/20 via-blue-500/20 to-purple-500/20 absolute top-0 left-0 right-0 -z-10" />
+
+      <main className="max-w-6xl mx-auto px-6 py-12 relative z-10">
         <div className="grid gap-6 lg:grid-cols-3">
           
           {/* Left Column: Profile Info & Streak */}
           <div className="space-y-6">
-            <Card>
+            <Card className="border-border/50 shadow-sm bg-background/60 backdrop-blur-xl">
               <CardContent className="p-6 flex flex-col items-center text-center">
-                <Avatar className="h-24 w-24 mb-4 ring-2 ring-primary/20 ring-offset-2 ring-offset-background">
-                  <AvatarFallback className="bg-primary/10 text-primary text-3xl font-bold">{initials}</AvatarFallback>
+                <Avatar className="h-32 w-32 mb-6 ring-4 ring-background shadow-xl">
+                  <AvatarFallback className="bg-gradient-to-br from-primary to-primary/60 text-primary-foreground text-4xl font-bold">{initials}</AvatarFallback>
                 </Avatar>
-                <h1 className="text-2xl font-bold">{profile.name}</h1>
+                <h1 className="text-2xl font-bold tracking-tight">{profile.name}</h1>
                 {profile.githubUsername && (
-                  <p className="text-sm text-muted-foreground mt-1">@{profile.githubUsername}</p>
+                  <p className="text-sm font-medium text-muted-foreground mt-1 bg-muted px-2 py-0.5 rounded-md">@{profile.githubUsername}</p>
                 )}
                 
-                {profile.bio && <p className="mt-4 text-sm leading-relaxed">{profile.bio}</p>}
+                {profile.bio && <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{profile.bio}</p>}
                 
-                <div className="mt-6 space-y-3 w-full border-t border-white/5 pt-6 text-left">
+                <div className="mt-6 space-y-3 w-full border-t pt-6 text-left">
                   <div className="flex items-center gap-3 text-sm text-muted-foreground">
                     <Calendar className="h-4 w-4" /> Joined {new Date(profile.createdAt).toLocaleDateString()}
                   </div>

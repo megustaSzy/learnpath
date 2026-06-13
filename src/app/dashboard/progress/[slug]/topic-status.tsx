@@ -4,6 +4,10 @@ import { useState } from "react";
 import { updateTopicStatus } from "@/lib/actions";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
 export function TopicStatusButton({ topicId, currentStatus }: { topicId: string; currentStatus: string }) {
   const [status, setStatus] = useState(currentStatus);
   const [loading, setLoading] = useState(false);
@@ -57,38 +61,32 @@ export function TopicStatusButton({ topicId, currentStatus }: { topicId: string;
         </SelectContent>
       </Select>
 
-      {dialogOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="bg-background border rounded-lg p-6 w-full max-w-md shadow-lg">
-            <h3 className="text-lg font-bold mb-2">Topic Completed! 🎉</h3>
-            <p className="text-sm text-muted-foreground mb-4">
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-xl">Topic Completed! 🎉</DialogTitle>
+            <DialogDescription>
               Do you have a GitHub repository for this topic? Attach it to show on your public portfolio.
-            </p>
-            <input 
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            <Input 
               type="url" 
               placeholder="https://github.com/username/repo" 
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mb-4"
               value={githubUrl}
               onChange={(e) => setGithubUrl(e.target.value)}
             />
-            <div className="flex justify-end gap-3">
-              <button 
-                onClick={() => setDialogOpen(false)}
-                className="px-4 py-2 text-sm rounded-md border hover:bg-accent"
-              >
-                Cancel
-              </button>
-              <button 
-                onClick={submitCompleted}
-                disabled={loading}
-                className="px-4 py-2 text-sm rounded-md bg-primary text-primary-foreground hover:bg-primary/90"
-              >
-                {loading ? "Saving..." : "Mark Completed"}
-              </button>
-            </div>
           </div>
-        </div>
-      )}
+          <DialogFooter className="flex sm:justify-end gap-3">
+            <Button variant="outline" onClick={() => setDialogOpen(false)}>
+              Skip
+            </Button>
+            <Button onClick={submitCompleted} disabled={loading}>
+              {loading ? "Saving..." : "Mark Completed"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
