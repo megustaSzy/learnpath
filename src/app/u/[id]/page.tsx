@@ -6,8 +6,9 @@ import { ExternalLink, Link2, Calendar, Flame, Trophy, Map as MapIcon, Activity,
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-export default async function PublicProfilePage({ params }: { params: { id: string } }) {
-  const profile = await getPublicProfile(params.id);
+export default async function PublicProfilePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const profile = await getPublicProfile(id);
 
   if (!profile) {
     notFound();
