@@ -16,6 +16,31 @@ function slugify(text: string) {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
 }
 
+async function handleStreak(userId: string) {
+  const user = await db.user.findUnique({ where: { id: userId }, select: { lastActiveDate: true, streakCount: true } });
+  if (!user) return;
+  
+  const now = new Date();
+  const lastActive = user.lastActiveDate;
+  
+  if (!lastActive) {
+    await db.user.update({ where: { id: userId }, data: { streakCount: 1, lastActiveDate: now } });
+    return;
+  }
+  
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const last = new Date(lastActive.getFullYear(), lastActive.getMonth(), lastActive.getDate());
+  const diffDays = Math.floor((today.getTime() - last.getTime()) / (1000 * 60 * 60 * 24));
+  
+  if (diffDays === 1) {
+    await db.user.update({ where: { id: userId }, data: { streakCount: user.streakCount + 1, lastActiveDate: now } });
+  } else if (diffDays > 1) {
+    await db.user.update({ where: { id: userId }, data: { streakCount: 1, lastActiveDate: now } });
+  } else if (diffDays === 0) {
+    await db.user.update({ where: { id: userId }, data: { lastActiveDate: now } });
+  }
+}
+
 // ===================== CATEGORY ACTIONS =====================
 export async function getCategories() {
   return db.roadmapCategory.findMany({ orderBy: { name: "asc" } });
@@ -200,7 +225,7 @@ export async function joinRoadmap(roadmapId: string) {
   return ur;
 }
 
-export async function updateTopicStatus(topicId: string, status: "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED") {
+export async function updateTopicStatus(topicId: string, status: "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED", githubRepoUrl?: string) {
   const session = await getSession();
   const progress = await db.userTopicProgress.findFirst({
     where: { userId: session.user.id, topicId },
@@ -212,10 +237,12 @@ export async function updateTopicStatus(topicId: string, status: "NOT_STARTED" |
     data: {
       status,
       completedAt: status === "COMPLETED" ? new Date() : null,
+      githubRepoUrl: githubRepoUrl || null,
     },
   });
 
   if (status === "COMPLETED") {
+    await handleStreak(session.user.id);
     const topic = await db.roadmapTopic.findUnique({
       where: { id: topicId },
       include: { roadmap: true },
@@ -321,6 +348,7 @@ export async function completeGoal(id: string) {
   await db.activityLog.create({
     data: { userId: session.user.id, activity: `Completed goal: ${goal.title}` },
   });
+  await handleStreak(session.user.id);
   revalidatePath("/dashboard/goals");
   return goal;
 }
@@ -373,16 +401,75 @@ export async function getProfile() {
     where: { id: session.user.id },
     select: {
       id: true, name: true, email: true, avatar: true, bio: true,
-      githubUrl: true, linkedinUrl: true, role: true, isActive: true, createdAt: true,
+      githubUrl: true, githubUsername: true, isPublicProfile: true, linkedinUrl: true, role: true, isActive: true, createdAt: true,
+      streakCount: true, lastActiveDate: true
     },
   });
+}
+
+export async function getLeaderboard() {
+  await getSession();
+  return db.user.findMany({
+    where: { isPublicProfile: true },
+    select: {
+      id: true,
+      name: true,
+      avatar: true,
+      githubUsername: true,
+      streakCount: true,
+      _count: {
+        select: {
+          achievements: true,
+          topicProgress: { where: { status: "COMPLETED" } }
+        }
+      }
+    },
+    orderBy: [
+      { streakCount: 'desc' },
+      { topicProgress: { _count: 'desc' } }
+    ],
+    take: 50
+  });
+}
+
+export async function getPublicProfile(idOrUsername: string) {
+  // First try to find by ID
+  let user = await db.user.findFirst({
+    where: { 
+      OR: [
+        { id: idOrUsername },
+        { githubUsername: idOrUsername }
+      ],
+      isPublicProfile: true 
+    },
+    select: {
+      id: true, name: true, avatar: true, bio: true,
+      githubUrl: true, githubUsername: true, linkedinUrl: true, createdAt: true,
+      streakCount: true,
+      achievements: {
+        include: { achievement: true }
+      },
+      topicProgress: {
+        where: { status: "COMPLETED" },
+        include: { topic: { include: { roadmap: { select: { title: true, slug: true } } } } }
+      },
+      activityLogs: {
+        orderBy: { createdAt: "desc" },
+        take: 10
+      }
+    }
+  });
+
+  return user;
 }
 
 export async function updateProfile(data: {
   name?: string;
   bio?: string;
   githubUrl?: string;
+  githubUsername?: string;
   linkedinUrl?: string;
+  isPublicProfile?: boolean;
 }) {
   const session = await getSession();
   const user = await db.user.update({

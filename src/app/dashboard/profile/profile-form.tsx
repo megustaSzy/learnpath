@@ -12,7 +12,9 @@ export function ProfileForm({ profile }: { profile: any }) {
     name: profile.name || "",
     bio: profile.bio || "",
     githubUrl: profile.githubUrl || "",
+    githubUsername: profile.githubUsername || "",
     linkedinUrl: profile.linkedinUrl || "",
+    isPublicProfile: profile.isPublicProfile ?? true,
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -42,15 +44,31 @@ export function ProfileForm({ profile }: { profile: any }) {
         <Label>Bio</Label>
         <Textarea value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} rows={3} placeholder="Tell us about yourself..." />
       </div>
-      <div className="space-y-2">
-        <Label>GitHub URL</Label>
-        <Input value={form.githubUrl} onChange={(e) => setForm({ ...form, githubUrl: e.target.value })} placeholder="https://github.com/username" />
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label>GitHub URL</Label>
+          <Input value={form.githubUrl} onChange={(e) => setForm({ ...form, githubUrl: e.target.value })} placeholder="https://github.com/username" />
+        </div>
+        <div className="space-y-2">
+          <Label>GitHub Username (for API integrations)</Label>
+          <Input value={form.githubUsername} onChange={(e) => setForm({ ...form, githubUsername: e.target.value })} placeholder="e.g. torvalds" />
+        </div>
       </div>
       <div className="space-y-2">
         <Label>LinkedIn URL</Label>
         <Input value={form.linkedinUrl} onChange={(e) => setForm({ ...form, linkedinUrl: e.target.value })} placeholder="https://linkedin.com/in/username" />
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 pt-2">
+        <input 
+          type="checkbox" 
+          id="public-profile" 
+          checked={form.isPublicProfile} 
+          onChange={(e) => setForm({ ...form, isPublicProfile: e.target.checked })}
+          className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+        />
+        <Label htmlFor="public-profile" className="cursor-pointer">Make my profile and portfolio public</Label>
+      </div>
+      <div className="flex items-center gap-3 pt-4">
         <Button type="submit" disabled={loading}>{loading ? "Saving..." : "Update Profile"}</Button>
         {success && <p className="text-sm text-green-400">Profile updated successfully!</p>}
       </div>

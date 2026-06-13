@@ -48,9 +48,13 @@ model User {
   avatar          String?
   bio             String?            @db.Text
   githubUrl       String?            @map("github_url")
+  githubUsername  String?            @map("github_username")
   linkedinUrl     String?            @map("linkedin_url")
   role            Role               @default(USER)
   isActive        Boolean            @default(true) @map("is_active")
+  isPublicProfile Boolean            @default(true) @map("is_public_profile")
+  streakCount     Int                @default(0) @map("streak_count")
+  lastActiveDate  DateTime?          @map("last_active_date")
   createdAt       DateTime           @default(now()) @map("created_at")
   updatedAt       DateTime           @updatedAt @map("updated_at")
 
@@ -139,12 +143,13 @@ model UserRoadmap {
 
 model UserTopicProgress {
   id          String       @id @default(uuid())
-  userId      String       @map("user_id")
-  topicId     String       @map("topic_id")
-  status      TopicStatus  @default(NOT_STARTED)
-  completedAt DateTime?    @map("completed_at")
+  userId        String       @map("user_id")
+  topicId       String       @map("topic_id")
+  status        TopicStatus  @default(NOT_STARTED)
+  completedAt   DateTime?    @map("completed_at")
+  githubRepoUrl String?      @map("github_repo_url")
 
-  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   topic       RoadmapTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
   
   @@map("user_topic_progress")

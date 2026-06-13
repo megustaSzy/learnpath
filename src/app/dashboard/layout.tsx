@@ -7,7 +7,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 import {
   LayoutDashboard, Map, FolderOpen, Target, Trophy, Bell,
-  History, User, Users, Shield, LogOut, Menu, X, ChevronDown
+  History, User, Users, Shield, LogOut, Menu, X, ChevronDown, Crown
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -25,6 +25,7 @@ const userNav = [
   { label: "Weekly Goals", href: "/dashboard/goals", icon: Target },
   { label: "Achievements", href: "/dashboard/achievements", icon: Trophy },
   { label: "Activity", href: "/dashboard/activity", icon: History },
+  { label: "Leaderboard", href: "/dashboard/leaderboard", icon: Crown },
   { label: "Notifications", href: "/dashboard/notifications", icon: Bell },
   { label: "Profile", href: "/dashboard/profile", icon: User },
 ];
@@ -139,10 +140,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 </Link>
               } />
               <DropdownMenuSeparator />
-              <DropdownMenuItem onSelect={(e) => {
-                e.preventDefault();
-                setLogoutOpen(true);
-              }} className="text-red-400">
+              <DropdownMenuItem onClick={() => setLogoutOpen(true)} className="text-red-400">
                 <LogOut className="mr-2 h-4 w-4" />
                 Sign Out
               </DropdownMenuItem>
