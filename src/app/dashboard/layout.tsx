@@ -16,6 +16,7 @@ import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem,
   DropdownMenuSeparator, DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const userNav = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -41,6 +42,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const pathname = usePathname();
   const { data: session } = useSession();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
   const role = (session?.user as any)?.role || "USER";
   const initials = session?.user?.name?.split(" ").map(n => n[0]).join("").toUpperCase() || "U";
@@ -137,12 +139,28 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 </Link>
               } />
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/login" })} className="text-red-400">
+              <DropdownMenuItem onSelect={(e) => {
+                e.preventDefault();
+                setLogoutOpen(true);
+              }} className="text-red-400">
                 <LogOut className="mr-2 h-4 w-4" />
                 Sign Out
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+
+          <Dialog open={logoutOpen} onOpenChange={setLogoutOpen}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Sign Out</DialogTitle>
+              </DialogHeader>
+              <p className="text-sm text-muted-foreground">Are you sure you want to log out from LearnPath?</p>
+              <div className="flex justify-end gap-3 mt-4">
+                <Button variant="outline" onClick={() => setLogoutOpen(false)}>Cancel</Button>
+                <Button variant="destructive" onClick={() => signOut({ callbackUrl: "/login" })}>Sign Out</Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </aside>
 
