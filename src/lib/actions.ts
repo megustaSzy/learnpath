@@ -410,7 +410,7 @@ export async function getProfile() {
 export async function getLeaderboard() {
   await getSession();
   return db.user.findMany({
-    where: { isPublicProfile: true },
+    where: { isPublicProfile: true, role: "USER" },
     select: {
       id: true,
       name: true,
