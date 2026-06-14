@@ -17,6 +17,7 @@ import {
   DropdownMenuSeparator, DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Chatbot } from "@/components/chatbot";
 
 const userNav = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -178,6 +179,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           {children}
         </main>
       </div>
+      {/* AI Chatbot */}
+      <Chatbot />
     </div>
   );
 }
