@@ -76,9 +76,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="flex h-16 items-center justify-between px-5 border-b border-white/5">
           <Link href="/dashboard" className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg bg-transparent">
-              <Image src="/logo-learn.png" alt="LearnPath Logo" width={32} height={32} className="object-contain" />
+              <Image src="/logo-learn.png" alt="LearnPathXX Logo" width={32} height={32} className="object-contain" />
             </div>
-            <span className="text-lg font-bold tracking-tight">LearnPath</span>
+            <span className="text-lg font-bold tracking-tight">LearnPathXX</span>
           </Link>
           <Button variant="ghost" size="icon" className="lg:hidden text-sidebar-foreground" onClick={() => setSidebarOpen(false)}>
             <X className="h-5 w-5" />
@@ -152,7 +152,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <DialogHeader>
                 <DialogTitle>Sign Out</DialogTitle>
               </DialogHeader>
-              <p className="text-sm text-muted-foreground">Are you sure you want to log out from LearnPath?</p>
+              <p className="text-sm text-muted-foreground">Are you sure you want to log out from LearnPathXX?</p>
               <div className="flex justify-end gap-3 mt-4">
                 <Button variant="outline" onClick={() => setLogoutOpen(false)}>Cancel</Button>
                 <Button variant="destructive" onClick={() => signOut({ callbackUrl: "/login" })}>Sign Out</Button>

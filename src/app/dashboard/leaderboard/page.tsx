@@ -16,7 +16,7 @@ export default async function LeaderboardPage() {
           </div>
           <h1 className="text-3xl font-bold tracking-tight mb-2">Global Leaderboard</h1>
           <p className="text-muted-foreground max-w-xl">
-            See how you stack up against other developers on LearnPath. Stay consistent, learn every day, and build your streak to climb the ranks!
+            See how you stack up against other developers on LearnPathXX. Stay consistent, learn every day, and build your streak to climb the ranks!
           </p>
         </div>
         <div className="absolute right-0 top-0 -mt-12 -mr-12 opacity-10 blur-3xl pointer-events-none">

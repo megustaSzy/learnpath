@@ -31,7 +31,7 @@ export default async function PublicProfilePage({ params }: { params: Promise<{ 
       <nav className="sticky top-0 w-full z-50 border-b bg-background/80 backdrop-blur-md">
         <div className="mx-auto max-w-6xl px-6 flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">LearnPath</span>
+            <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">LearnPathX</span>
           </Link>
           <div className="flex items-center gap-3">
             <Link href="/dashboard" className="text-sm font-medium hover:underline text-muted-foreground hover:text-foreground">
