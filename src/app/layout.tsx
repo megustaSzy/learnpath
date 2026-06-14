@@ -9,8 +9,8 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "LearnPathXX - Developer Roadmap Tracker",
-  description: "Plan, track, and complete your developer learning roadmap with LearnPathXX.",
+  title: "LearnPathX - Developer Roadmap Tracker",
+  description: "Plan, track, and complete your developer learning roadmap with LearnPathX.",
 };
 
 export default function RootLayout({

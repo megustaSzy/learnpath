@@ -18,9 +18,9 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-6 flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg bg-transparent">
-              <Image src="/logo-learn.png" alt="LearnPathXX Logo" width={32} height={32} className="object-contain" />
+              <Image src="/logo-learn.png" alt="LearnPathX Logo" width={32} height={32} className="object-contain" />
             </div>
-            <span className="text-xl font-bold tracking-tight">LearnPathXX</span>
+            <span className="text-xl font-bold tracking-tight">LearnPathX</span>
           </Link>
           <div className="flex items-center gap-3">
             <Link href="/login">
@@ -46,7 +46,7 @@ export default function HomePage() {
             <br />With Confidence
           </h1>
           <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            LearnPathXX helps developers plan, track, and complete their learning roadmaps.
+            LearnPathX helps developers plan, track, and complete their learning roadmaps.
             Set goals, earn achievements, and monitor your progress with an interactive dashboard.
           </p>
           <div className="mt-8 flex items-center justify-center gap-4">
@@ -86,7 +86,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-3xl text-center rounded-2xl border bg-gradient-to-b from-primary/10 to-transparent p-12">
           <h2 className="text-3xl font-bold">Ready to Start Your Journey?</h2>
           <p className="mt-3 text-muted-foreground">
-            Join developers who are learning smarter and tracking their progress with LearnPathXX.
+            Join developers who are learning smarter and tracking their progress with LearnPathX.
           </p>
           <Link href="/register">
             <Button size="lg" className="mt-6 gap-2">
@@ -99,7 +99,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="border-t py-8 px-6">
         <div className="mx-auto max-w-6xl flex items-center justify-between text-sm text-muted-foreground">
-          <p>© 2026 LearnPathXX. Built by Raditya Ahmad.</p>
+          <p>© 2026 LearnPathX. Built by Raditya Ahmad.</p>
           <div className="flex gap-4">
             <Link href="/login" className="hover:text-foreground transition-colors">Login</Link>
             <Link href="/register" className="hover:text-foreground transition-colors">Register</Link>
